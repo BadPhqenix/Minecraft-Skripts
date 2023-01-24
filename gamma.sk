@@ -1,0 +1,10 @@
+command /gamma:
+	trigger:
+		if {gamma::%player%} is not set:
+			set {gamma::%player%} to true
+			apply potion of night vision 1 to player for 999 days
+			send "&aWlaczyles gamme!" to player
+		else:
+			clear {gamma::%player%}
+			remove night vision from player
+			send "&cWyl¹czyles gamme!" to player

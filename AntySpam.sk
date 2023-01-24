@@ -1,0 +1,103 @@
+command /kit:   
+    trigger:
+        execute player command "/dasdasdasdasa"
+
+on first join:
+
+	execute console command "randomtp %player%"
+
+	loop all players:
+
+		if loop-player has permission "helpop.admin":
+
+			send " &8» &3Nowy gracz: &b%player%" to loop-player
+
+
+
+on join:
+
+
+	set join message to ""
+
+	
+
+on quit:
+
+	set leave message to ""
+    
+
+options:
+        VoucherTextLeg: &e&lVIP
+		
+
+on right click:
+	if player's tool is paper named "{@VoucherTextLeg}" :
+		execute console command "pex user %player% group set VIP"
+		remove 1 paper named "{@VoucherTextLeg}" from the player
+		send "&c*** &e%player% &7Wykorzystal Voucher na &6&lVIPA &c***"
+		
+
+options:
+        VoucherTextSvip: &5&lSVIP		
+
+on right click:
+	if player's tool is paper named "{@VoucherTextSvip}" :
+		execute console command "pex user %player% group set SVIP"
+		remove 1 paper named "{@VoucherTextSvip}" from the player
+		send "&c*** &e%player% &7wykorzystal Voucher na &5&LSVIPA &c***"
+
+on mine of stone:
+ if player's gamemode is survival:
+   
+  chance of 0.01%:
+   give 1 paper named "&e&lVIP" to the player
+   execute console command "tb msg %player% "
+   execute console command "stb msg %player% &8» &7Wykopales &eVIP."
+   broadcast "&8&l[&6&lEVENT&8&l] &8» &7Gracz &8: &e%player% &7wykopal &9VIPA&7."
+   
+  chance of 0.001%:
+   give 1 paper named "&5&lSVIP" to the player
+   execute console command "tb msg %player% "
+   execute console command "stb msg %player% &8» &7Wykopales &9SVIPA."
+   broadcast "&8&l[&6&lEVENT&8&l] &8» &7Gracz &8: &e%player% &7wykopal &9SVIPA&7."
+
+variables:
+	antyspam.%player% = 0
+on chat:
+	if {antyspam.%player%} is 0:
+		if player has permission "antyspam.admin":
+			stop
+		else:
+			if player has permission "antyspam.vip":
+				set {antyspam.%player%} to 5
+			else:
+				set {antyspam.%player%} to 5
+	else:
+		cancel event
+		send "&8» &7Nastepna wiadomosc za: &e%{antyspam.%player%}% &7sekund!"
+
+	
+every second:
+	loop all players:
+		if {antyspam.%loop-player%} is more than 0:
+			remove 1 from {antyspam.%loop-player%}
+
+
+
+command /group [<offlineplayer>] [<text>]:
+	permission: pogromca.group
+	permission message: &4Blad: &cNie masz dostepu do &6pogromca.group
+	trigger:
+		arg 1 is not set:
+			send "&8» &cPoprawne uzycie: &6/group ( nick ) ( ranga )"
+			send ""
+			send "&8» &fRANGI &8( &6GRACZA &8)"
+			send "&8» &6vip,svip,sponsor,swagger,friend,yt,yt+"
+			send ""
+			send "&8» &fRANGI &8( &6ADMINISTRATOR &8)"
+			send "&8» &6helper,moderator,admin,headadmin,root"
+		arg 1 is set:
+			send "" to all players
+			send "&8» &8( &4RANGI &8) &fRanga &6%arg 2% &fzostala nadana dla: &6%arg 1%" to all players
+			send "" to all players
+			execute console command "pex user %arg 1% group set %arg 2%"

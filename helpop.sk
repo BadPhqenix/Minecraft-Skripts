@@ -1,0 +1,17 @@
+options:
+	spamhelpop: 1
+command /helpop [<text>]:
+	trigger:
+		if arg 1 is set:
+			send "&c[HelpOP] &3%player%&7: %arg 1%" to all ops
+			send "&aTwoja wiadomosc zostala wyslana na HELPOP." to player
+			set {helpop.%player%} to false
+			wait {@spamhelpop} minute
+			set {helpop.%player%} to true
+		if arg 1 is not set:
+			send "&c> &8Prawidlowe uzycie /helpop <wiadomosc>"
+ 
+on command "/helpop":
+	if {helpop.%player%} is false:
+		cancel event
+		send "&cNa helpop mozna pisac co 1 minute."
