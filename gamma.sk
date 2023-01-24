@@ -7,4 +7,4 @@ command /gamma:
 		else:
 			clear {gamma::%player%}
 			remove night vision from player
-			send "&cWyl¹czyles gamme!" to player
+			send "&cWylaczyles gamme!" to player
